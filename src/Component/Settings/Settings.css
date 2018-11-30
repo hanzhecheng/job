@@ -1,0 +1,18 @@
+.job__settings{
+    margin-right: 10px;
+}
+.job_apiurl{
+    display: flex;
+    align-items: center;
+}
+.job_apiurl .ant-input{
+    width: 100px;
+    margin: 0 10px;
+}
+.job__table__column .ant-input{
+    width: 40px;
+    margin-right: 5px;
+}
+.job__table__column span{
+    margin-right: 10px;
+}

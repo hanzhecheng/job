@@ -1,7 +1,7 @@
 import 'babel-polyfill';
 import React, { Component } from 'react';
 import './App.css';
-import Job  from './Component/Job';
+import Job  from './Component/Job/Job';
 class App extends Component {
   render() {
     return (

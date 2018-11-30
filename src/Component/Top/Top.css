@@ -1,0 +1,23 @@
+.job__top{
+    margin-top: 10px;
+}
+.job__countdowm {
+    margin-right: 20px;
+    display: inline-block;
+    height: 30px;
+    line-height: 30px;
+}
+
+.job__countdowm__num {
+    font-size: 1.5em;
+    margin-right: 5px;
+    color: rgba(181, 44, 44, 1)
+}
+
+.job__btn {
+    margin: 5px;
+}
+
+.job__loading {
+    margin-left: 20px;
+}

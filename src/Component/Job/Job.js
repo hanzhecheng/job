@@ -1,7 +1,13 @@
 import React, { Component } from 'react';
-import { Row, Col, List, Button, Spin, Input, Card, Table, Avatar } from 'antd';
-import apiUrls from '../utils/config'
+import { Row, Col, Input} from 'antd';
+import apiUrls from '@/utils/config'
 import axios from 'axios';
+//日志列表
+import JobList from '@/Component/JobList/JobList'
+//顶部操作
+import Top from '@/Component/Top/Top'
+//任务设置
+import Settings from '@/Component/Settings/Settings'
 import './Job.css';
 class Job extends Component {
     constructor(props) {
@@ -11,26 +17,6 @@ class Job extends Component {
             isStart: false,
             logs: [],
             countDown: 5,
-            tblColumns: [//table列
-                {
-                    title: '任务名称',
-                    dataIndex: 'name',
-                    key: 'name',
-                    width: "200"
-                },
-                {
-                    title: '任务时间间隔',
-                    dataIndex: 'time',
-                    key: 'time',
-                    render: (text, record) => (
-                        <div className="job__table__column">
-                            <Input value={text.day} onChange={this.changeValue.bind(this, 'day', record.key, 'change')} onBlur={this.changeValue.bind(this, 'day', record.key, 'blur')} /><span>天</span>
-                            <Input value={text.hour} onChange={this.changeValue.bind(this, 'hour', record.key, 'change')} onBlur={this.changeValue.bind(this, 'hour', record.key, 'blur')} /><span>时</span>
-                            <Input value={text.minute} onChange={this.changeValue.bind(this, 'minute', record.key, 'change')} onBlur={this.changeValue.bind(this, 'minute', record.key, 'blur')} /><span>分</span>
-                        </div>
-                    )
-                }
-            ],
             dataSource: [//table数据
                 {
                     key: '0',
@@ -68,7 +54,7 @@ class Job extends Component {
         clearInterval(this.commoJobID)
         clearInterval(this.cardJobID)
     }
-
+    //修改table数据
     changeValue = (val, index, type, event) => {
         let data = this.state.dataSource
         if (type === 'blur') {
@@ -84,7 +70,7 @@ class Job extends Component {
             })
         }
     }
-
+    //简单封装一个axios的post方法
     fetchData = (val) => {
         axios({
             url: val.url,
@@ -128,7 +114,7 @@ class Job extends Component {
             name: '推送自营商品库存和价格'
         })
     }
-
+    //开启定时器
     startJob = () => {
         if (this.state.countDown !== 0) {
             this.setState({
@@ -144,7 +130,7 @@ class Job extends Component {
         this.cardInfoToHb()
         this.setJob()
     }
-
+    //设置定时器
     setJob = () => {
         clearInterval(this.commoJobID)
         clearInterval(this.cardJobID)
@@ -158,7 +144,7 @@ class Job extends Component {
             this.cardInfoToHb();
         }, (cardTimeSource.day * 24 * 60 + cardTimeSource.hour * 60 + cardTimeSource.minute) * basicSecond)
     }
-
+    //停止定时器
     stopJob = () => {
         this.setState({
             isStart: false,
@@ -167,13 +153,14 @@ class Job extends Component {
         clearInterval(this.commoJobID)
         clearInterval(this.cardJobID)
     }
-
+    //清除table数据
     clearLog = () => {
         this.setState({
             logs: []
         })
+        sessionStorage.setItem("logs", JSON.stringify(this.state.logs));
     }
-
+    //过滤table数据
     filterLog = (val) => {
         let logs = JSON.parse(sessionStorage.getItem("logs"))
         if (val) {
@@ -203,66 +190,36 @@ class Job extends Component {
     }
 
     render() {
-        //操作按钮
-        const buttons = this.state.isStart ? <Button type="danger" icon="stop" size="large" onClick={this.stopJob}>终止任务</Button>
-            : <Button type="primary" icon="play-circle" size="large" onClick={this.startJob}>立即执行</Button>
-        //倒计时操作
-        const countDown = this.state.countDown !== 0 ?
-            <label className="job__countdowm">
-                <span className="job__countdowm__num">{this.state.countDown}</span>秒后将自动开始任务
-            </label> : ""
-        //成功icon
-        const successIcon = <Avatar icon="check-circle" style={{ backgroundColor: '#fff', color: '#52c41a' }}></Avatar>
-        //失败icon
-        const errorIcon = <Avatar icon="close-circle" style={{ backgroundColor: '#fff', color: 'rgba(181, 44, 44, 1)' }}></Avatar>
-
         return (
             <div className="job">
                 <Row type="flex" justify="center" align="center" style={{ margin: 20 }} gutter={16}>
                     <Col span={8}>
-                        {countDown}
-                        {buttons}
-                        <Button className="job__btn" icon="delete" size="large" onClick={this.clearLog}>清空列表</Button>
-                        <Spin className="job__loading" tip="正在运行..." spinning={this.state.loading} />
+                        <Top
+                            loading={this.state.loading}
+                            isStart={this.state.isStart}
+                            countNumber={this.state.countDown}
+                            onStopJob={this.stopJob}
+                            onStartJob={this.startJob}
+                            onClearLog={this.clearLog}
+                        ></Top>
                     </Col>
                 </Row>
                 <Row type="flex" justify="center" align="top">
                     <Col span={20}>
                         <Col span={10}>
-                            <Card title="任务设置" bordered className="job__settings"
-                                extra={<div className="job_apiurl">
-                                    <span>接口地址:</span>
-                                    <Input value={this.state.apiUrl.origin} onChange={this.changeApiUrl.bind(this, 'origin', 'change')} onBlur={this.changeApiUrl.bind(this, 'origin', 'blur')} />
-                                    <span>端口:</span>
-                                    <Input value={this.state.apiUrl.port} onChange={this.changeApiUrl.bind(this, 'port', 'change')} onBlur={this.changeApiUrl.bind(this, 'port', 'blur')} />
-                                </div>}>
-                                <Table dataSource={this.state.dataSource} columns={this.state.tblColumns} />
-                            </Card>
+                            <Settings
+                                apiUrl={this.state.apiUrl}
+                                dataSource={this.state.dataSource}
+                                onChangeApiUrl={this.changeApiUrl}
+                                onChangeValue={this.changeValue}
+                            >
+                            </Settings>
                         </Col>
                         <Col span={14}>
-                            <List
-                                itemLayout="horizontal"
-                                header={
-                                    <div>
-                                        <label className="job__title">日志列表</label>
-                                        <Input.Search
-                                            placeholder="筛选列表"
-                                            onSearch={val => this.filterLog(val)}
-                                            style={{ width: 200 }}
-                                        />
-                                    </div>
-                                }
-                                bordered
-                                pagination
+                            <JobList
                                 dataSource={this.state.logs}
-                                renderItem={item => (<List.Item>
-                                    <List.Item.Meta
-                                        avatar={item.description.indexOf("调用成功") !== -1 ? successIcon : errorIcon}
-                                        title={item.title}
-                                        description={item.description}
-                                    />
-                                </List.Item>)}
-                            />
+                                onFilter={this.filterLog}>
+                            </JobList>
                         </Col>
 
                     </Col>
