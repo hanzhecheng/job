@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Row, Col, Input} from 'antd';
+import { Row, Col} from 'antd';
 import apiUrls from '@/utils/config'
 import axios from 'axios';
 //日志列表
