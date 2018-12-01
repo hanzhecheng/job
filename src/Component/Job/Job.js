@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
-import { Row, Col} from 'antd';
+import { Row, Col } from 'antd';
 import apiUrls from '@/utils/config'
 import axios from 'axios';
+import './Job.css';
 //日志列表
 import JobList from '@/Component/JobList/JobList'
 //顶部操作
 import Top from '@/Component/Top/Top'
 //任务设置
 import Settings from '@/Component/Settings/Settings'
-import './Job.css';
+
 class Job extends Component {
     constructor(props) {
         super(props)
@@ -100,7 +101,7 @@ class Job extends Component {
             sessionStorage.setItem("logs", JSON.stringify(this.state.logs));
         })
     }
-
+    
     cardInfoToHb = () => {
         this.fetchData({
             url: `http://${this.state.apiUrl.origin}:${this.state.apiUrl.port}/api/OfflineApi/cardInfoToHb`,
@@ -212,16 +213,14 @@ class Job extends Component {
                                 dataSource={this.state.dataSource}
                                 onChangeApiUrl={this.changeApiUrl}
                                 onChangeValue={this.changeValue}
-                            >
-                            </Settings>
+                            ></Settings>
                         </Col>
                         <Col span={14}>
                             <JobList
                                 dataSource={this.state.logs}
-                                onFilter={this.filterLog}>
-                            </JobList>
+                                onFilter={this.filterLog}
+                            ></JobList>
                         </Col>
-
                     </Col>
 
                 </Row>
