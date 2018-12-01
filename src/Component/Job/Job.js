@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Row, Col } from 'antd';
-import apiUrls from '@/utils/config'
-import axios from 'axios';
+import {apiUrls} from '@/utils/config'
+import fetch from '@/utils/fetch'
 import './Job.css';
 //日志列表
 import JobList from '@/Component/JobList/JobList'
@@ -73,19 +73,7 @@ class Job extends Component {
     }
     //简单封装一个axios的post方法
     fetchData = (val) => {
-        axios({
-            url: val.url,
-            method: 'post',
-            headers: { 'Content-Type': 'application/json' },
-            onUploadProgress: function (progressEvent) { //原生获取上传进度的事件
-                if (progressEvent.lengthComputable) {
-                    //属性lengthComputable主要表明总共需要完成的工作量和已经完成的工作是否可以被测量
-                    //如果lengthComputable为false，就获取不到progressEvent.total和progressEvent.loaded
-                    console.log(progressEvent);
-                }
-            },
-            data: {}
-        }).then(res => {
+        fetch.post(val.url, {}).then(res => {
             let resObj = {
                 title: (new Date()).toLocaleString() + " : " + val.name,
                 description: ''
@@ -101,7 +89,7 @@ class Job extends Component {
             sessionStorage.setItem("logs", JSON.stringify(this.state.logs));
         })
     }
-    
+
     cardInfoToHb = () => {
         this.fetchData({
             url: `http://${this.state.apiUrl.origin}:${this.state.apiUrl.port}/api/OfflineApi/cardInfoToHb`,
