@@ -5,7 +5,8 @@ class Settings extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            tblColumns: [//table列
+            //table列应放在子组件中,数据来源放在父组件
+            tblColumns: [
                 {
                     title: '任务名称',
                     dataIndex: 'name',
