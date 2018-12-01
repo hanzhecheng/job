@@ -1,3 +1,7 @@
 .job__title {
     margin-right: 20px;
 }
+
+.job__input--search {
+    width: 200px;
+}

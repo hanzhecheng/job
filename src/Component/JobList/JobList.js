@@ -24,7 +24,7 @@ class JobList extends Component {
                         <Input.Search
                             placeholder="筛选列表"
                             onSearch={val => this.filterLog(val)}
-                            style={{ width: 200 }}
+                            className="job__input--search"
                         />
                     </div>
                 }
