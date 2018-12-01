@@ -73,7 +73,7 @@ methods.forEach(item => {
     fetch[item] = function (url, data, config) {
         return new Promise(function (resolve, reject) {
             ajax[item](url, data, config).then(response => {
-                if (response.data.code === '0') {
+                if (response.data.status === 1) {
                     resolve(response.data);
                 } else {
                     notification['error']({
