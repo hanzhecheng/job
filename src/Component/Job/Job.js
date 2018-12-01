@@ -73,21 +73,24 @@ class Job extends Component {
     }
     //简单封装一个axios的post方法
     fetchData = (val) => {
+        let resObj = {
+            title: (new Date()).toLocaleString() + " : " + val.name,
+            description: ''
+        }
         fetch.post(val.url, {}).then(res => {
-            let resObj = {
-                title: (new Date()).toLocaleString() + " : " + val.name,
-                description: ''
-            }
-            if (res.data.status === 1) {
-                resObj.description = '调用成功'
-            } else {
-                resObj.description = res.data.message
-            }
-            this.setState({
-                logs: [resObj, ...this.state.logs]
-            })
-            sessionStorage.setItem("logs", JSON.stringify(this.state.logs));
+            resObj.description = '调用成功'
+            this.addToLogs(resObj)
+        }).catch(err=>{
+            resObj.description = err.data.message
+            this.addToLogs(resObj)
         })
+    }
+
+    addToLogs(val){
+        this.setState({
+            logs: [val, ...this.state.logs]
+        })
+        sessionStorage.setItem("logs", JSON.stringify(this.state.logs));
     }
 
     cardInfoToHb = () => {
