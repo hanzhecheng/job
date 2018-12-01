@@ -1,14 +1,12 @@
 import axios from "axios";
-import {baseUrl} from './config'
 import {
     notification
 } from 'antd';
 const methods = ["get", "post"]
 let ajax = axios.create({
-    baseURL: baseUrl,
     timeout: 5000
 })
-const fetchData = {}
+const fetch = {}
 ajax.interceptors.request.use(config => {
 
     return config
@@ -72,7 +70,7 @@ ajax.interceptors.response.use(response => {
     return new Promise(error)
 })
 methods.forEach(item => {
-    fetchData[item] = function (url, data, config) {
+    fetch[item] = function (url, data, config) {
         return new Promise(function (resolve, reject) {
             ajax[item](url, data, config).then(response => {
                 if (response.data.code === '0') {
@@ -88,4 +86,4 @@ methods.forEach(item => {
         })
     }
 })
-export default fetchData
+export default fetch
