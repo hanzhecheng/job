@@ -77,15 +77,15 @@ class Job extends Component {
             title: (new Date()).toLocaleString() + " : " + val.name,
             description: ''
         }
-        fetch.post(val.url, {}).then(res => {
+        fetch.post(val.url,{}).then(res => {
             resObj.description = '调用成功'
             this.addToLogs(resObj)
-        }).catch(err=>{
-            resObj.description = err.data.message
+        }).catch(errMsg=>{
+            resObj.description = errMsg
             this.addToLogs(resObj)
         })
     }
-
+    
     addToLogs(val){
         this.setState({
             logs: [val, ...this.state.logs]

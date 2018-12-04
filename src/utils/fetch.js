@@ -57,9 +57,11 @@ methods.forEach(item => {
                         message: '温馨提示',
                         description: response.data.message
                     });
-                    reject(response)
+                    reject(response.data.message)
                 }
-            }).catch(error => {})
+            }).catch(error => {
+                reject(error.message)
+            })
         })
     }
 })
