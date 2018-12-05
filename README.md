@@ -19,4 +19,5 @@ yarn build
 - 封装axios，统一处理错误信息
 
 ### 2018/12/5 更新
-- 增加页面Loading骨架图，采用react-content-loader，需要自己设置一下简单的svg图即可
+ - 增加页面Loading骨架图，采用react-content-loader，需要自己设置一下简单的svg图即可
+ - 增加react-loadable，异步加载组件，配合loading，非常的方便
