@@ -17,3 +17,6 @@ yarn build
 
 ### 2018/12/4 更新
 - 封装axios，统一处理错误信息
+
+### 2018/12/5 更新
+- 增加页面Loading骨架图，采用react-content-loader，需要自己设置一下简单的svg图即可
