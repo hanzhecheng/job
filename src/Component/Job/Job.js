@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Row, Col } from 'antd';
-import {apiUrls} from '@/utils/config'
+import { apiUrls } from '@/utils/config'
 import fetch from '@/utils/fetch'
 import './Job.css';
 //日志列表
@@ -77,16 +77,16 @@ class Job extends Component {
             title: (new Date()).toLocaleString() + " : " + val.name,
             description: ''
         }
-        fetch.post(val.url,{}).then(res => {
+        fetch.post(val.url, {}).then(res => {
             resObj.description = '调用成功'
             this.addToLogs(resObj)
-        }).catch(errMsg=>{
+        }).catch(errMsg => {
             resObj.description = errMsg
             this.addToLogs(resObj)
         })
     }
-    
-    addToLogs(val){
+
+    addToLogs(val) {
         this.setState({
             logs: [val, ...this.state.logs]
         })
@@ -152,6 +152,7 @@ class Job extends Component {
         })
         sessionStorage.setItem("logs", JSON.stringify(this.state.logs));
     }
+   
     //过滤table数据
     filterLog = (val) => {
         let logs = JSON.parse(sessionStorage.getItem("logs"))
