@@ -38,6 +38,8 @@ class Job extends Component {
         sessionStorage.setItem("logs", JSON.stringify(this.state.logs));
     }
     componentDidMount() {
+        //
+        //倒计时开始
         this.countDown = setInterval(() => {
             this.setState({
                 countDown: this.state.countDown - 1
