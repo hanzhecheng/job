@@ -13,7 +13,11 @@
     margin-right: 5px;
     color: rgba(181, 44, 44, 1)
 }
-
+.job__countdowm__cancel{
+    cursor: pointer;
+    margin: 0 10px;
+    color:#1890ff;
+}
 .job__btn {
     margin: 5px;
 }
