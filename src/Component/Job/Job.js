@@ -1,14 +1,30 @@
 import React, { Component } from 'react';
+import Loadable from 'react-loadable';
 import { Row, Col } from 'antd';
 import { apiUrls } from '@/utils/config'
 import fetch from '@/utils/fetch'
 import './Job.css';
 //日志列表
-import JobList from '@/Component/JobList/JobList'
+const JobList = Loadable({
+    loader: () => import('@/Component/JobList/JobList'),
+    loading() {
+        return <div>Loading...</div>
+    }
+});
 //顶部操作
-import Top from '@/Component/Top/Top'
+const Top = Loadable({
+    loader: () => import('@/Component/Top/Top'),
+    loading() {
+        return <div>Loading...</div>
+    }
+});
 //任务设置
-import Settings from '@/Component/Settings/Settings'
+const Settings = Loadable({
+    loader: () => import('@/Component/Settings/Settings'),
+    loading() {
+        return <div>Loading...</div>
+    }
+});
 
 class Job extends Component {
     constructor(props) {
@@ -38,8 +54,7 @@ class Job extends Component {
         sessionStorage.setItem("logs", JSON.stringify(this.state.logs));
     }
     componentDidMount() {
-        //
-        //倒计时开始
+        //倒计时
         this.countDown = setInterval(() => {
             this.setState({
                 countDown: this.state.countDown - 1
@@ -147,6 +162,12 @@ class Job extends Component {
         clearInterval(this.commoJobID)
         clearInterval(this.cardJobID)
     }
+    //取消定时器
+    cancelJob = () => {
+        clearInterval(this.countDown)
+        let countDown = 0
+        this.setState({ countDown })
+    }
     //清除table数据
     clearLog = () => {
         this.setState({
@@ -154,7 +175,7 @@ class Job extends Component {
         })
         sessionStorage.setItem("logs", JSON.stringify(this.state.logs));
     }
-   
+
     //过滤table数据
     filterLog = (val) => {
         let logs = JSON.parse(sessionStorage.getItem("logs"))
@@ -196,6 +217,7 @@ class Job extends Component {
                             onStopJob={this.stopJob}
                             onStartJob={this.startJob}
                             onClearLog={this.clearLog}
+                            onCancelJob={this.cancelJob}
                         ></Top>
                     </Col>
                 </Row>
