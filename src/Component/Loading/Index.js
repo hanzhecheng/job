@@ -2,10 +2,6 @@ import ContentLoader from 'react-content-loader'
 import React, { Component } from 'react'
 import './Loading.css'
 class Loading extends Component {
-    constructor(props) {
-        super(props)
-        this.state = {}
-    }
     render() {
         return (
             <ContentLoader className="loading" height={200} secondaryColor="Gainsboro">

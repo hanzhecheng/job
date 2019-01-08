@@ -1,11 +1,7 @@
 import React, { Component } from 'react';
 import './JobList.css';
 import { List, Input, Avatar } from 'antd';
-class JobList extends Component {
-    constructor(props) {
-        super(props)
-        this.state = {}
-    }
+class JobList extends Component {  
     //过滤table数据
     filterLog = (val) => {
         this.props.onFilter(val)
