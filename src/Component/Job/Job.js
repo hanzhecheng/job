@@ -1,30 +1,14 @@
 import React, { Component } from 'react';
-import Loadable from 'react-loadable';
 import { Row, Col } from 'antd';
 import { apiUrls } from '@/utils/config'
 import fetch from '@/utils/fetch'
 import './Job.css';
 //日志列表
-const JobList = Loadable({
-    loader: () => import('@/Component/JobList/JobList'),
-    loading() {
-        return <div>Loading...</div>
-    }
-});
+import JobList from '@/Component/JobList/JobList'
 //顶部操作
-const Top = Loadable({
-    loader: () => import('@/Component/Top/Top'),
-    loading() {
-        return <div>Loading...</div>
-    }
-});
+import Top from '@/Component/Top/Top'
 //任务设置
-const Settings = Loadable({
-    loader: () => import('@/Component/Settings/Settings'),
-    loading() {
-        return <div>Loading...</div>
-    }
-});
+import Settings from '@/Component/Settings/Settings'
 
 class Job extends Component {
     constructor(props) {

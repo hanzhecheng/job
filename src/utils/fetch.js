@@ -4,6 +4,7 @@ import {
 } from 'antd';
 const methods = ["get", "post"]
 let ajax = axios.create({
+    //超时时间
     timeout: 50000
 })
 const fetch = {}
