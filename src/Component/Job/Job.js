@@ -33,6 +33,10 @@ class Job extends Component {
             apiUrl: {
                 origin: apiUrls.origin,
                 port: apiUrls.port
+            },
+            remainTime:{
+                card:0,
+                goods:0
             }
         }
         sessionStorage.setItem("logs", JSON.stringify(this.state.logs));
@@ -136,6 +140,11 @@ class Job extends Component {
         this.cardJobID = setInterval(() => {
             this.cardInfoToHb();
         }, (cardTimeSource.day * 24 * 60 + cardTimeSource.hour * 60 + cardTimeSource.minute) * basicSecond)
+        let remainTime={
+            card:(cardTimeSource.day * 24 * 60 + cardTimeSource.hour * 60 + cardTimeSource.minute) * basicSecond,
+            goods:(commoTimeSource.day * 24 * 60 + commoTimeSource.hour * 60 + commoTimeSource.minute) * basicSecond
+        }
+        this.setState({remainTime})
     }
     //停止定时器
     stopJob = () => {
@@ -203,6 +212,12 @@ class Job extends Component {
                             onClearLog={this.clearLog}
                             onCancelJob={this.cancelJob}
                         ></Top>
+                    </Col>
+                    <Col span={6}>
+                        <div>
+                            card剩余时间：{this.state.remainTime.card},
+                            goods剩余时间：{this.state.remainTime.goods}
+                        </div>
                     </Col>
                 </Row>
                 <Row type="flex" justify="center" align="top">

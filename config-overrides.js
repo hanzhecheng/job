@@ -8,5 +8,6 @@ module.exports = function override(config, env) {
     config.resolve.alias = {
         '@': resolve('src')
     }
+    
     return config
 }
