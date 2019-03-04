@@ -14,14 +14,14 @@ class Settings extends Component {
                     width: "200"
                 },
                 {
-                    title: '任务时间间隔',
+                    title: '每日任务时间',
                     dataIndex: 'time',
                     key: 'time',
                     render: (text, record) => (
                         <div className="job__table__column">
-                            <Input value={text.day} onChange={this.changeValue.bind(this, 'day', record.key, 'change')} onBlur={this.changeValue.bind(this, 'day', record.key, 'blur')} /><span>天</span>
                             <Input value={text.hour} onChange={this.changeValue.bind(this, 'hour', record.key, 'change')} onBlur={this.changeValue.bind(this, 'hour', record.key, 'blur')} /><span>时</span>
                             <Input value={text.minute} onChange={this.changeValue.bind(this, 'minute', record.key, 'change')} onBlur={this.changeValue.bind(this, 'minute', record.key, 'blur')} /><span>分</span>
+
                         </div>
                     )
                 }

@@ -33,10 +33,6 @@ class Job extends Component {
             apiUrl: {
                 origin: apiUrls.origin,
                 port: apiUrls.port
-            },
-            remainTime:{
-                card:0,
-                goods:0
             }
         }
         sessionStorage.setItem("logs", JSON.stringify(this.state.logs));
@@ -131,20 +127,24 @@ class Job extends Component {
     setJob = () => {
         clearInterval(this.commoJobID)
         clearInterval(this.cardJobID)
-        //一分钟
-        let basicSecond = 1000 * 60
+      
         let commoTimeSource = this.state.dataSource[0].time, cardTimeSource = this.state.dataSource[1].time
+        let commoTime = commoTimeSource.hour + ":" + commoTimeSource.minute + ":" + "0",cardTime = cardTimeSource.hour + ":" + cardTimeSource.minute + ":" + "0"
         this.commoJobID = setInterval(() => {
-            this.commoStockToHb();
-        }, (commoTimeSource.day * 24 * 60 + commoTimeSource.hour * 60 + commoTimeSource.minute) * basicSecond)
+            let dates = new Date();
+            let currentTime = dates.getHours() + ":" + dates.getMinutes() + ":" + dates.getSeconds()
+
+            if (currentTime === (commoTime)) {
+                this.commoStockToHb();
+            }
+        }, 1000)
         this.cardJobID = setInterval(() => {
-            this.cardInfoToHb();
-        }, (cardTimeSource.day * 24 * 60 + cardTimeSource.hour * 60 + cardTimeSource.minute) * basicSecond)
-        let remainTime={
-            card:(cardTimeSource.day * 24 * 60 + cardTimeSource.hour * 60 + cardTimeSource.minute) * basicSecond,
-            goods:(commoTimeSource.day * 24 * 60 + commoTimeSource.hour * 60 + commoTimeSource.minute) * basicSecond
-        }
-        this.setState({remainTime})
+            let dates = new Date();
+            let currentTime = dates.getHours() + ":" + dates.getMinutes() + ":" + dates.getSeconds()
+            if (currentTime === (cardTime)) {
+                this.cardInfoToHb();
+            }
+        }, 1000)
     }
     //停止定时器
     stopJob = () => {
@@ -212,12 +212,6 @@ class Job extends Component {
                             onClearLog={this.clearLog}
                             onCancelJob={this.cancelJob}
                         ></Top>
-                    </Col>
-                    <Col span={6}>
-                        <div>
-                            card剩余时间：{this.state.remainTime.card},
-                            goods剩余时间：{this.state.remainTime.goods}
-                        </div>
                     </Col>
                 </Row>
                 <Row type="flex" justify="center" align="top">
