@@ -22,12 +22,12 @@ class Job extends Component {
                 {
                     key: '0',
                     name: '推送会员卡信息',
-                    time: { day: '0', hour: '0', minute: '5' }
+                    time: { day: '0', hour: '7', minute: '0' }
                 },
                 {
                     key: '1',
                     name: '推送自营商品库存和价格',
-                    time: { day: '0', hour: '0', minute: '5' }
+                    time: { day: '0', hour: '7', minute: '0' }
                 }
             ],
             apiUrl: {
