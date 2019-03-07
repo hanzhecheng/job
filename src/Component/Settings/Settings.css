@@ -9,6 +9,9 @@
     width: 100px;
     margin: 0 10px;
 }
+.job__settings__channel{
+    margin: 0 10px;
+}
 .job__table__column .ant-input{
     width: 40px;
     margin-right: 5px;

@@ -33,7 +33,8 @@ class Job extends Component {
             apiUrl: {
                 origin: apiUrls.origin,
                 port: apiUrls.port
-            }
+            },
+            channelId:'5'
         }
         sessionStorage.setItem("logs", JSON.stringify(this.state.logs));
     }
@@ -96,14 +97,14 @@ class Job extends Component {
 
     cardInfoToHb = () => {
         this.fetchData({
-            url: `http://${this.state.apiUrl.origin}:${this.state.apiUrl.port}/api/OfflineApi/cardInfoToHb`,
+            url: `http://${this.state.apiUrl.origin}:${this.state.apiUrl.port}/api/OfflineApi/cardInfoToHb?channelId=${this.state.channelId}`,
             name: '推送会员卡信息'
         })
     }
 
     commoStockToHb = () => {
         this.fetchData({
-            url: `http://${this.state.apiUrl.origin}:${this.state.apiUrl.port}/api/OfflineApi/commoStockToHb`,
+            url: `http://${this.state.apiUrl.origin}:${this.state.apiUrl.port}/api/OfflineApi/commoStockToHb?channelId=${this.state.channelId}`,
             name: '推送自营商品库存和价格'
         })
     }
@@ -127,9 +128,9 @@ class Job extends Component {
     setJob = () => {
         clearInterval(this.commoJobID)
         clearInterval(this.cardJobID)
-      
+
         let commoTimeSource = this.state.dataSource[0].time, cardTimeSource = this.state.dataSource[1].time
-        let commoTime = commoTimeSource.hour + ":" + commoTimeSource.minute + ":" + "0",cardTime = cardTimeSource.hour + ":" + cardTimeSource.minute + ":" + "0"
+        let commoTime = commoTimeSource.hour + ":" + commoTimeSource.minute + ":0", cardTime = cardTimeSource.hour + ":" + cardTimeSource.minute + ":0"
         this.commoJobID = setInterval(() => {
             let dates = new Date();
             let currentTime = dates.getHours() + ":" + dates.getMinutes() + ":" + dates.getSeconds()
@@ -197,6 +198,10 @@ class Job extends Component {
             })
         }
     }
+    updateChannel = (channelId) => {
+        this.setState({channelId})
+        this.stopJob()
+    }
 
     render() {
         return (
@@ -215,11 +220,12 @@ class Job extends Component {
                     </Col>
                 </Row>
                 <Row type="flex" justify="center" align="top">
-                    <Col span={20}>
+                    <Col span={22}>
                         <Col span={10}>
                             <Settings
                                 apiUrl={this.state.apiUrl}
                                 dataSource={this.state.dataSource}
+                                onUpdateChannel={this.updateChannel}
                                 onChangeApiUrl={this.changeApiUrl}
                                 onChangeValue={this.changeValue}
                             ></Settings>

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { Input, Card, Table } from 'antd';
+import { Input, Card, Table, Select } from 'antd';
 import './Settings.css';
+const Option = Select.Option;
 class Settings extends Component {
     constructor(props) {
         super(props)
@@ -34,10 +35,18 @@ class Settings extends Component {
     changeApiUrl = (val, type, event) => {
         this.props.onChangeApiUrl(val, type, event)
     }
+    handleChange = (value) => {
+        this.props.onUpdateChannel(value)
+    }
     render() {
         return (
-            <Card title="任务设置" bordered className="job__settings"
+            <Card title="" bordered className="job__settings"
                 extra={<div className="job_apiurl">
+                    <span>门店:</span>
+                    <Select defaultValue="3" className="job__settings__channel" onChange={this.handleChange}>
+                        <Option value="3">美罗观前店</Option>
+                        <Option value="5">美罗新区店</Option>
+                    </Select>
                     <span>接口地址:</span>
                     <Input value={this.props.apiUrl.origin}
                         onChange={this.changeApiUrl.bind(this, 'origin', 'change')}
