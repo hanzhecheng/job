@@ -22,19 +22,22 @@ class Job extends Component {
                 {
                     key: '0',
                     name: '推送会员卡信息',
-                    time: { day: '0', hour: '7', minute: '0' }
+                    time: { day: '0', hour: '7', minute: '0' },
+                    count: '1'
                 },
                 {
                     key: '1',
                     name: '推送自营商品库存和价格',
-                    time: { day: '0', hour: '7', minute: '0' }
+                    time: { day: '0', hour: '7', minute: '0' },
+                    count: '1'
                 }
             ],
+
             apiUrl: {
                 origin: apiUrls.origin,
                 port: apiUrls.port
             },
-            channelId:'5'
+            channelId: '5'
         }
         sessionStorage.setItem("logs", JSON.stringify(this.state.logs));
     }
@@ -61,18 +64,29 @@ class Job extends Component {
     changeValue = (val, index, type, event) => {
         let data = this.state.dataSource
         if (type === 'blur') {
-            data[index].time[val] = data[index].time[val] ? data[index].time[val] : 0
+            if (val === 'count') {
+                data[index][val] = data[index][val] ? data[index][val] : 1
+            } else {
+                data[index].time[val] = data[index].time[val] ? data[index].time[val] : 0
+            }
+
             this.setState({
                 dataSource: data
             })
             this.setJob()
         } else {
-            data[index].time[val] = event.target.value
+            if (val === 'count') {
+                data[index][val] = event.target.value
+            } else {
+                data[index].time[val] = event.target.value
+            }
+
             this.setState({
                 dataSource: data
             })
         }
     }
+
     //简单封装一个axios的post方法
     fetchData = (val) => {
         let resObj = {
@@ -128,24 +142,32 @@ class Job extends Component {
     setJob = () => {
         clearInterval(this.commoJobID)
         clearInterval(this.cardJobID)
-
+        let commoIntervalHour = Math.floor(24 / this.state.dataSource[0].count), cardIntervalHour = Math.floor(24 / this.state.dataSource[1].count);
         let commoTimeSource = this.state.dataSource[0].time, cardTimeSource = this.state.dataSource[1].time
-        let commoTime = commoTimeSource.hour + ":" + commoTimeSource.minute + ":0", cardTime = cardTimeSource.hour + ":" + cardTimeSource.minute + ":0"
+        let commoTime = this.setHourInterval(commoTimeSource, this.state.dataSource[0].count, commoIntervalHour);
+        let cardTime = this.setHourInterval(cardTimeSource, this.state.dataSource[1].count, cardIntervalHour);
         this.commoJobID = setInterval(() => {
             let dates = new Date();
             let currentTime = dates.getHours() + ":" + dates.getMinutes() + ":" + dates.getSeconds()
-
-            if (currentTime === (commoTime)) {
+            if (commoTime.includes(currentTime)) {
                 this.commoStockToHb();
             }
         }, 1000)
         this.cardJobID = setInterval(() => {
             let dates = new Date();
             let currentTime = dates.getHours() + ":" + dates.getMinutes() + ":" + dates.getSeconds()
-            if (currentTime === (cardTime)) {
+            if (cardTime.includes(currentTime)) {
                 this.cardInfoToHb();
             }
         }, 1000)
+    }
+    //设置间隔小时数
+    setHourInterval(timeSource, count, interval) {
+        let arr = []
+        for (let index = 0; index < count; index++) {
+            arr.push((parseInt(timeSource.hour) + parseInt(index * interval)) + ":" + timeSource.minute + ":0")
+        }
+        return arr
     }
     //停止定时器
     stopJob = () => {
@@ -199,7 +221,7 @@ class Job extends Component {
         }
     }
     updateChannel = (channelId) => {
-        this.setState({channelId})
+        this.setState({ channelId })
         this.stopJob()
     }
 

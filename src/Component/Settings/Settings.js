@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Input, Card, Table, Select } from 'antd';
+import { Input, Card, Table, Select, Icon, Popover } from 'antd';
 import './Settings.css';
 const Option = Select.Option;
 class Settings extends Component {
@@ -20,13 +20,30 @@ class Settings extends Component {
                     key: 'time',
                     render: (text, record) => (
                         <div className="job__table__column">
-                            <Input value={text.hour} onChange={this.changeValue.bind(this, 'hour', record.key, 'change')} onBlur={this.changeValue.bind(this, 'hour', record.key, 'blur')} /><span>时</span>
-                            <Input value={text.minute} onChange={this.changeValue.bind(this, 'minute', record.key, 'change')} onBlur={this.changeValue.bind(this, 'minute', record.key, 'blur')} /><span>分</span>
+                            <Input value={text.hour} onChange={this.changeValue.bind(this, 'hour', record.key, 'change')}
+                                onBlur={this.changeValue.bind(this, 'hour', record.key, 'blur')} /><span>时</span>
+                            <Input value={text.minute} onChange={this.changeValue.bind(this, 'minute', record.key, 'change')}
+                                onBlur={this.changeValue.bind(this, 'minute', record.key, 'blur')} /><span>分</span>
+                        </div>
+                    )
+                },
+                {
+                    title: "每日任务次数",
+                    dataIndex: 'count',
+                    key: 'count',
+                    render: (text, record) => (
+                        <div className="job__table__column">
+                            <Input value={text} onChange={this.changeValue.bind(this, 'count', record.key, 'change')}
+                                onBlur={this.changeValue.bind(this, 'count', record.key, 'blur')} /><span>次</span>
+                            <Popover content={this.state.tipcontent} title="温馨提示" trigger="hover">
+                                <Icon type="question-circle" />
+                            </Popover>
 
                         </div>
                     )
                 }
             ],
+            tipcontent:'次数最好为可被24整除的整数(例:3,4,6),时间间隔以小时计算,不能整除将取整计算(例:次数7,时间间隔取24/7的整数部分3作为时间间隔)'
         }
     }
     changeValue = (val, index, type, event) => {
