@@ -24,6 +24,7 @@ class Job extends Component {
                     name: '推送会员卡信息',
                     time: { day: '0', hour: '7', minute: '0' },
                     count: '1'
+
                 },
                 {
                     key: '1',
@@ -142,14 +143,21 @@ class Job extends Component {
     setJob = () => {
         clearInterval(this.commoJobID)
         clearInterval(this.cardJobID)
-        //任务时间间隔
-        let commoIntervalHour = Math.floor(24 / this.state.dataSource[0].count), cardIntervalHour = Math.floor(24 / this.state.dataSource[1].count);
+
         //任务数据源
         let commoTimeSource = this.state.dataSource[0].time, cardTimeSource = this.state.dataSource[1].time
+        //任务时间间隔
+        let commoIntervalHour = Math.floor((24 - commoTimeSource.hour) / this.state.dataSource[0].count),
+            cardIntervalHour = Math.floor((24 - commoTimeSource.hour) / this.state.dataSource[1].count);
+
         //间隔时间数组
         let commoTime = this.setHourInterval(commoTimeSource, this.state.dataSource[0].count, commoIntervalHour);
         let cardTime = this.setHourInterval(cardTimeSource, this.state.dataSource[1].count, cardIntervalHour);
-        
+
+        //测试输出任务时间
+        console.log(commoTime)
+        console.log(cardTime)
+
         this.commoJobID = setInterval(() => {
             let dates = new Date();
             let currentTime = dates.getHours() + ":" + dates.getMinutes() + ":" + dates.getSeconds()
