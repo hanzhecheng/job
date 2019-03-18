@@ -142,10 +142,14 @@ class Job extends Component {
     setJob = () => {
         clearInterval(this.commoJobID)
         clearInterval(this.cardJobID)
+        //任务时间间隔
         let commoIntervalHour = Math.floor(24 / this.state.dataSource[0].count), cardIntervalHour = Math.floor(24 / this.state.dataSource[1].count);
+        //任务数据源
         let commoTimeSource = this.state.dataSource[0].time, cardTimeSource = this.state.dataSource[1].time
+        //间隔时间数组
         let commoTime = this.setHourInterval(commoTimeSource, this.state.dataSource[0].count, commoIntervalHour);
         let cardTime = this.setHourInterval(cardTimeSource, this.state.dataSource[1].count, cardIntervalHour);
+        
         this.commoJobID = setInterval(() => {
             let dates = new Date();
             let currentTime = dates.getHours() + ":" + dates.getMinutes() + ":" + dates.getSeconds()
