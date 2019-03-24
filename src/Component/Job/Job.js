@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Row, Col } from 'antd';
-import { apiUrls } from '@/utils/config'
+import apiUrls  from '@/utils/config'
 import fetch from '@/utils/fetch'
 import './Job.css';
 //日志列表
