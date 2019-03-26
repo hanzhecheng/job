@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { Row, Col } from 'antd';
-import apiUrls  from '@/utils/config'
+import { Row, Col, message } from 'antd';
+import { apiUrls } from '@/utils/config'
 import fetch from '@/utils/fetch'
 import './Job.css';
 //日志列表
@@ -38,21 +38,21 @@ class Job extends Component {
                 origin: apiUrls.origin,
                 port: apiUrls.port
             },
-            channelId: '5'
+            channelId: ''
         }
         sessionStorage.setItem("logs", JSON.stringify(this.state.logs));
     }
     componentDidMount() {
         //倒计时
-        this.countDown = setInterval(() => {
-            this.setState({
-                countDown: this.state.countDown - 1
-            })
-            if (this.state.countDown === 0) {
-                clearInterval(this.countDown)
-                this.startJob()
-            }
-        }, 1000)
+        // this.countDown = setInterval(() => {
+        //     this.setState({
+        //         countDown: this.state.countDown - 1
+        //     })
+        //     if (this.state.countDown === 0) {
+        //         clearInterval(this.countDown)
+        //         this.startJob()
+        //     }
+        // }, 1000)
     }
 
     componentWillUnmount() {
@@ -125,6 +125,10 @@ class Job extends Component {
     }
     //开启定时器
     startJob = () => {
+        if (!this.state.channelId) {
+            message.warning("请先选择一个门店！")
+            return
+        }
         if (this.state.countDown !== 0) {
             this.setState({
                 countDown: 0
@@ -258,6 +262,7 @@ class Job extends Component {
                         <Col span={10}>
                             <Settings
                                 apiUrl={this.state.apiUrl}
+                                isStart={this.state.isStart}
                                 dataSource={this.state.dataSource}
                                 onUpdateChannel={this.updateChannel}
                                 onChangeApiUrl={this.changeApiUrl}
