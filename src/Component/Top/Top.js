@@ -16,7 +16,7 @@ class Top extends Component {
 
         return (
             <div className="job__top">
-                {time}
+               
                 {buttons}
                 <Button className="job__btn" icon="delete" size="large" onClick={this.props.onClearLog}>清空列表</Button>
                 <Spin className="job__loading" tip="正在运行..." spinning={this.props.loading} />
