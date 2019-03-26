@@ -35,7 +35,7 @@ class Settings extends Component {
                         <div className="job__table__column">
                             <Input value={text} onChange={this.changeValue.bind(this, 'count', record.key, 'change')}
                                 onBlur={this.changeValue.bind(this, 'count', record.key, 'blur')} /><span>次</span>
-                            <Popover content={this.state.tipcontent} title="温馨提示" trigger="hover">
+                            <Popover content={this.state.tipcontent} title="执行时间计算规则" trigger="hover">
                                 <Icon type="question-circle" />
                             </Popover>
 
@@ -43,7 +43,7 @@ class Settings extends Component {
                     )
                 }
             ],
-            tipcontent:'次数最好为可被24整除的整数(例:3,4,6),时间间隔以小时计算,不能整除将取整计算(例:次数7,时间间隔取24/7的整数部分3作为时间间隔)'
+            tipcontent:'执行时间为:(24-每日任务时间小时数)/每日任务次数.例:每日任务时间7时0分,每日任务次数4次,时间间隔=(24-7)/4=4.25(舍小数)=4,执行时间：["7:0:0", "11:0:0", "15:0:0", "19:0:0"]'
         }
     }
     changeValue = (val, index, type, event) => {
@@ -60,16 +60,16 @@ class Settings extends Component {
             <Card title="" bordered className="job__settings"
                 extra={<div className="job_apiurl">
                     <span>门店:</span>
-                    <Select defaultValue="3" className="job__settings__channel" onChange={this.handleChange}>
+                    <Select className="job__settings__channel" onChange={this.handleChange} disabled={this.props.isStart}>
                         <Option value="3">美罗观前店</Option>
                         <Option value="5">美罗新区店</Option>
                     </Select>
                     <span>接口地址:</span>
-                    <Input value={this.props.apiUrl.origin}
+                    <Input value={this.props.apiUrl.origin} disabled={this.props.isStart}
                         onChange={this.changeApiUrl.bind(this, 'origin', 'change')}
                         onBlur={this.changeApiUrl.bind(this, 'origin', 'blur')} />
                     <span>端口:</span>
-                    <Input value={this.props.apiUrl.port}
+                    <Input value={this.props.apiUrl.port} disabled={this.props.isStart}
                         onChange={this.changeApiUrl.bind(this, 'port', 'change')}
                         onBlur={this.changeApiUrl.bind(this, 'port', 'blur')} />
                 </div>}>

@@ -11,6 +11,7 @@
 }
 .job__settings__channel{
     margin: 0 10px;
+    width: 120px;
 }
 .job__table__column .ant-input{
     width: 40px;
