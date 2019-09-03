@@ -61,8 +61,8 @@ class Settings extends Component {
                 extra={<div className="job_apiurl">
                     <span>门店:</span>
                     <Select className="job__settings__channel" onChange={this.handleChange} disabled={this.props.isStart}>
-                        <Option value="3">美罗观前店</Option>
-                        <Option value="5">美罗新区店</Option>
+                        <Option value="3">xxx</Option>
+                        <Option value="5">xxx</Option>
                     </Select>
                     <span>接口地址:</span>
                     <Input value={this.props.apiUrl.origin} disabled={this.props.isStart}

@@ -112,15 +112,15 @@ class Job extends Component {
 
     cardInfoToHb = () => {
         this.fetchData({
-            url: `http://${this.state.apiUrl.origin}:${this.state.apiUrl.port}/api/OfflineApi/cardInfoToHb?channelId=${this.state.channelId}`,
-            name: '推送会员卡信息'
+            url: `http://${this.state.apiUrl.origin}:${this.state.apiUrl.port}/api/xxx/xxx?xxx=${this.state.channelId}`,
+            name: 'xxxx'
         })
     }
 
     commoStockToHb = () => {
         this.fetchData({
-            url: `http://${this.state.apiUrl.origin}:${this.state.apiUrl.port}/api/OfflineApi/commoStockToHb?channelId=${this.state.channelId}`,
-            name: '推送自营商品库存和价格'
+            url: `http://${this.state.apiUrl.origin}:${this.state.apiUrl.port}/api/xxx/xxx?xxx=${this.state.channelId}`,
+            name: 'xxxx'
         })
     }
     //开启定时器
