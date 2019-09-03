@@ -21,14 +21,14 @@ class Job extends Component {
             dataSource: [//table数据
                 {
                     key: '0',
-                    name: '推送会员卡信息',
+                    name: 'xxx',
                     time: { day: '0', hour: '7', minute: '0' },
                     count: '1'
 
                 },
                 {
                     key: '1',
-                    name: '推送自营商品库存和价格',
+                    name: 'xxx',
                     time: { day: '0', hour: '7', minute: '0' },
                     count: '1'
                 }
@@ -43,16 +43,7 @@ class Job extends Component {
         sessionStorage.setItem("logs", JSON.stringify(this.state.logs));
     }
     componentDidMount() {
-        //倒计时
-        // this.countDown = setInterval(() => {
-        //     this.setState({
-        //         countDown: this.state.countDown - 1
-        //     })
-        //     if (this.state.countDown === 0) {
-        //         clearInterval(this.countDown)
-        //         this.startJob()
-        //     }
-        // }, 1000)
+      
     }
 
     componentWillUnmount() {
